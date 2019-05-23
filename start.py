@@ -28,7 +28,7 @@ def main():
         elif head_coords == c.coords(BLOCK):
             s.add_segment()
             c.delete(BLOCK)
-            add_trailernull()
+            add_trailer()
         # If crashes into itself
         else:
             for index in range(len(s.segments)-1):
