@@ -73,10 +73,15 @@ class Truck(object):
 
     def add_segment(self):
         """ Plus trailer """
-        #PASS
+        last_seg = c.coords(self.segments[0].instance)
+        x = last_seg[2] - SEG_SIZE
+        y = last_seg[3] - SEG_SIZE
+        self.segments.insert(0, Segment(x, y))
+
     def change_direction(self, event):
         """ truck changes direction """
-
+        if event.keysym in self.mapping:
+            self.vector = self.mapping[event.keysym]
 
 root = Tk()
 root.title("Lorry driver")
