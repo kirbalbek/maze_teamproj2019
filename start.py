@@ -5,12 +5,12 @@ from glob_var import *
 # functions
 def add_trailer():
     """adds trailer to existing truck(2 positions on x axis, 2 positions on y axis)"""
-        global BLOCK
-        posy = SEG_SIZE * random.randint(1, (HEIGHT-SEG_SIZE) / SEG_SIZE)
-        posx = SEG_SIZE * random.randint(1, (WIDTH-SEG_SIZE) / SEG_SIZE)
-        BLOCK = c.create_oval(posx, posy,
-                              posx+SEG_SIZE, posy+SEG_SIZE,
-                              fill="white")
+    global BLOCK
+    posy = SEG_SIZE * random.randint(1, (HEIGHT-SEG_SIZE) / SEG_SIZE)
+    posx = SEG_SIZE * random.randint(1, (WIDTH-SEG_SIZE) / SEG_SIZE)
+    BLOCK = c.create_oval(posx, posy,
+                          posx+SEG_SIZE, posy+SEG_SIZE,
+                          fill="white")
 
 
 def main():
@@ -42,14 +42,14 @@ def main():
 
 class Segment(object):
     """ Single trailer/truck segment """
-        def __init__(self, x, y):
-            self.instance = c.create_rectangle(x, y,
-                                               x+SEG_SIZE, y+SEG_SIZE,
-                                               fill="whites")
+    def __init__(self, x, y):
+        self.instance = c.create_rectangle(x, y,
+                                           x+SEG_SIZE, y+SEG_SIZE,
+                                           fill="white")
 
 class Truck(object):
-    """ Truck class """
-    def __init__(self):
+    #Truck class
+    def __init__(self, segments):
         """так же зависит от сегментов из Сегмента,
         здесь описываем направления движения"""
         self.segments = segments
@@ -60,7 +60,7 @@ class Truck(object):
         self.vector = self.mapping["Right"]
 
     def move(self):
-        """ Truck moves"""
+        #Truck moves
         for index in range(len(self.segments)-1):
             segment = self.segments[index].instance
             x1, y1, x2, y2 = c.coords(self.segments[index+1].instance)
@@ -92,13 +92,13 @@ c.grid()
 # Keys pressing
 c.focus_set()
 
-# creating segments and snake
-segments = [] """list of trailers attached initially"""
-truck1 = Truck(segments)
-
+# creating trailers
+segments = [Segment(SEG_SIZE, SEG_SIZE),
+            Segment(SEG_SIZE*2, SEG_SIZE),
+            Segment(SEG_SIZE*3, SEG_SIZE)]
+s = Truck(segments)
 # Reaction on keypress
 c.bind("<KeyPress>", s.change_direction)
-
-add_trailernull()
+add_trailer()
 main()
 root.mainloop()
