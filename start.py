@@ -2,7 +2,7 @@ from tkinter import *
 import random
 from glob_var import *
 
-# functions
+#Functions
 def add_trailer():
     """adds trailer to existing truck(2 positions on x axis, 2 positions on y axis)"""
     global BLOCK
@@ -14,8 +14,9 @@ def add_trailer():
 
 
 def main():
-    """main part"""
+    #Operates the main part
     global GAME_ACTIVE
+    #GAME_ACTIVE variable describes whether player still did not lose
     if GAME_ACTIVE:
         s.move()
         head_coords = c.coords(s.segments[-1].instance)
@@ -41,7 +42,7 @@ def main():
                       fill="Yellow")
 
 class Segment(object):
-    """ Single trailer/truck segment """
+    #Describes the class of a single trailer/truck segment
     def __init__(self, x, y):
         self.instance = c.create_rectangle(x, y,
                                            x+SEG_SIZE, y+SEG_SIZE,
@@ -53,10 +54,10 @@ class Truck(object):
         """так же зависит от сегментов из Сегмента,
         здесь описываем направления движения"""
         self.segments = segments
-        # possible moves
+        #Possible moves
         self.mapping = {"Down": (0, 1), "Right": (1, 0),
                         "Up": (0, -1), "Left": (-1, 0)}
-        # initial movement direction
+        #Initial movement direction
         self.vector = self.mapping["Right"]
 
     def move(self):
@@ -72,14 +73,14 @@ class Truck(object):
                  x2+self.vector[0]*SEG_SIZE, y2+self.vector[1]*SEG_SIZE)
 
     def add_segment(self):
-        """ Plus trailer """
+        #Plus one trailer
         last_seg = c.coords(self.segments[0].instance)
         x = last_seg[2] - SEG_SIZE
         y = last_seg[3] - SEG_SIZE
         self.segments.insert(0, Segment(x, y))
 
     def change_direction(self, event):
-        """ truck changes direction """
+        #The truck changes direction
         if event.keysym in self.mapping:
             self.vector = self.mapping[event.keysym]
 
@@ -88,17 +89,15 @@ root.title("Lorry driver")
 
 c = Canvas(root, width=WIDTH, height=HEIGHT, bg="#003300")
 c.grid()
-
-# Keys pressing
+#Keys pressing
 c.focus_set()
-
-# creating trailers
+#Creating trailers
 segments = [Segment(SEG_SIZE, SEG_SIZE),
             Segment(SEG_SIZE*2, SEG_SIZE),
             Segment(SEG_SIZE*3, SEG_SIZE)]
 s = Truck(segments)
-# Reaction on keypress
 c.bind("<KeyPress>", s.change_direction)
+#Reaction on keypress
 add_trailer()
 main()
 root.mainloop()
