@@ -50,11 +50,27 @@ class Segment(object):
 class Truck(object):
     """ Truck class """
     def __init__(self):
-        """так же зависит от сегментов из Сегмента, здесь описываем направления движения"""
-        #PASS
+        """так же зависит от сегментов из Сегмента,
+        здесь описываем направления движения"""
+        self.segments = segments
+        # possible moves
+        self.mapping = {"Down": (0, 1), "Right": (1, 0),
+                        "Up": (0, -1), "Left": (-1, 0)}
+        # initial movement direction
+        self.vector = self.mapping["Right"]
+
     def move(self):
         """ Truck moves"""
-        #PASS
+        for index in range(len(self.segments)-1):
+            segment = self.segments[index].instance
+            x1, y1, x2, y2 = c.coords(self.segments[index+1].instance)
+            c.coords(segment, x1, y1, x2, y2)
+
+        x1, y1, x2, y2 = c.coords(self.segments[-2].instance)
+        c.coords(self.segments[-1].instance,
+                 x1+self.vector[0]*SEG_SIZE, y1+self.vector[1]*SEG_SIZE,
+                 x2+self.vector[0]*SEG_SIZE, y2+self.vector[1]*SEG_SIZE)
+
     def add_segment(self):
         """ Plus trailer """
         #PASS
