@@ -1,5 +1,0 @@
-# Globals
-WIDTH = 800
-HEIGHT = 600
-SEG_SIZE = 20
-GAME_ACTIVE = True
