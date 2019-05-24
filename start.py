@@ -10,8 +10,8 @@ def add_trailer():
     posy = SEG_SIZE * random.randint(1, (HEIGHT - SEG_SIZE) / SEG_SIZE)
     posx = SEG_SIZE * random.randint(1, (WIDTH - SEG_SIZE) / SEG_SIZE)
     BLOCK = c.create_rectangle(posx, posy,
-                          posx + SEG_SIZE, posy + SEG_SIZE,
-                          fill="purple", outline="red", width=5)
+                               posx + SEG_SIZE, posy + SEG_SIZE,
+                               fill="purple", outline="red", width=5)
 
 
 def main():
@@ -42,6 +42,9 @@ def main():
                       text="You crashed.",
                       font="Arial 30",
                       fill="Black")
+        result = "Ваш счет: "+str(len(segments))
+        c.create_text(400, 500, fill="Black", font="Arial 20",
+                      text=result)
 
 
 class Segment(object):
@@ -94,6 +97,9 @@ img = PhotoImage(file='image.png')
 c.create_image(0, 0, anchor=NW, image=img)
 label = Label(image=img)
 label.image = img
+c.create_rectangle(100, 0, 700, 50, fill="White")
+c.create_text(400, 25, fill="Black", font="Arial 20",
+              text="Игра Дальнобойщик. Соберите максимальное число прицепов!")
 c.grid()
 # Keys pressing
 c.focus_set()
